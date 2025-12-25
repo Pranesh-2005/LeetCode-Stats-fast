@@ -2,10 +2,7 @@ import { generate } from "../src/index";
 
 export default async function handler(req: any, res: any) {
   try {
-    const url = new URL(
-      req.url ?? "/api/leetcode",
-      "http://localhost"
-    );
+    const url = new URL(req.url ?? "/api/leetcode", "http://localhost");
     const params = url.searchParams;
 
     const username = params.get("username") ?? "selva19";
@@ -19,8 +16,8 @@ export default async function handler(req: any, res: any) {
       theme,
       animation,
       width,
-      height,
-      extensions: [], // Add extensions parameter
+      height
+      // ❌ DO NOT pass `extensions`
     });
 
     res.setHeader("Content-Type", "image/svg+xml");

@@ -5,6 +5,8 @@
     "module": "ESNext",
     "target": "ES2022",
     "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
 
     "lib": [
       "ES2022",
@@ -18,6 +20,8 @@
     "preserveConstEnums": true,
     "sourceMap": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
 
     "skipLibCheck": true
   },

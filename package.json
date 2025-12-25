@@ -5,7 +5,6 @@
   "scripts": {
     "build": "tsup",
     "test": "vitest",
-    "dev": "vercel dev",
     "start": "node dist/index.js"
   },
   "dependencies": {

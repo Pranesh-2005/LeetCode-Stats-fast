@@ -1,4 +1,4 @@
-import { generate } from "./dist/index.js";
+import { generate } from "./src/index";
 
 async function test() {
   try {
@@ -8,7 +8,7 @@ async function test() {
       animation: true,
       width: 500,
       height: 200,
-      extensions: [], // No extensions to avoid font loading
+      extensions: [],
     });
     console.log("SVG generated successfully:", svg.length, "characters");
   } catch (error) {
