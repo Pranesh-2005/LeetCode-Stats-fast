@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { LeetCode, LeetCodeCN } from "leetcode-query";
-import { CN_LANGS_MAP, CN_RESULTS_MAP } from "./constants";
-import { FetchedData } from "./types";
+import { CN_LANGS_MAP, CN_RESULTS_MAP } from "./constants.js";
+import { FetchedData } from "./types.js";
 
 interface ProblemCount {
     difficulty: string;

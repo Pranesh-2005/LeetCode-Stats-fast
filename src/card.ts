@@ -1,7 +1,7 @@
-import { Icon, Ranking, Root, Solved, TotalSolved, Username } from "./elements";
-import { Item } from "./item";
-import query from "./query";
-import { Config, Extension, FetchedData } from "./types";
+import { Icon, Ranking, Root, Solved, TotalSolved, Username } from "./elements.js";
+import { Item } from "./item.js";
+import query from "./query.js";
+import { Config, Extension, FetchedData } from "./types.js";
 
 export class Generator {
     public verbose = false;

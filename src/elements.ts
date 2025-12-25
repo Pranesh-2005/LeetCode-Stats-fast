@@ -1,5 +1,5 @@
-import { Item, svg_attrs } from "./item";
-import { Config, FetchedData } from "./types";
+import { Item, svg_attrs } from "./item.js";
+import { Config, FetchedData } from "./types.js";
 
 export function Root(config: Config, data: FetchedData) {
     return new Item("svg", {

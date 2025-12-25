@@ -1,4 +1,4 @@
-import { Item as Base } from "./types";
+import { Item as Base } from "./types.js";
 
 let counter = 0;
 
