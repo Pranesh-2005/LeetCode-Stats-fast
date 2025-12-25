@@ -20,6 +20,7 @@ export default async function handler(req: any, res: any) {
       animation,
       width,
       height,
+      extensions: [], // Add extensions parameter
     });
 
     res.setHeader("Content-Type", "image/svg+xml");

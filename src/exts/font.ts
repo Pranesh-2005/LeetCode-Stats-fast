@@ -1,8 +1,8 @@
-import Baloo_2 from "nano-font/fonts/Baloo_2";
-import Milonga from "nano-font/fonts/Milonga";
-import Patrick_Hand from "nano-font/fonts/Patrick_Hand";
-import Ruthie from "nano-font/fonts/Ruthie";
-import Source_Code_Pro from "nano-font/fonts/Source_Code_Pro";
+import Baloo_2 from "nano-font/fonts/Baloo_2.js";
+import Milonga from "nano-font/fonts/Milonga.js";
+import Patrick_Hand from "nano-font/fonts/Patrick_Hand.js";
+import Ruthie from "nano-font/fonts/Ruthie.js";
+import Source_Code_Pro from "nano-font/fonts/Source_Code_Pro.js";
 import { Generator } from "../card";
 import { Extension } from "../types";
 
