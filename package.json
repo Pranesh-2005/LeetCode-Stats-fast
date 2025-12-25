@@ -3,7 +3,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "tsup",
     "test": "vitest",
     "start": "node dist/index.js"
   },

@@ -1,4 +1,4 @@
-import { generate } from "../dist/index.js";
+import { generate } from "../src/index";
 
 export default async function handler(req: any, res: any) {
   try {
