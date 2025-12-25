@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "echo skip build",
+    "build": "tsup",
     "test": "vitest",
     "start": "node dist/index.js"
   },
