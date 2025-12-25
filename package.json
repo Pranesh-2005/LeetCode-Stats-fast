@@ -1,0 +1,24 @@
+{
+  "name": "leetcode-card",
+  "private": true,
+  "type": "module",
+
+  "scripts": {
+    "build": "tsup",
+    "dev": "vercel dev"
+  },
+
+  "dependencies": {
+    "leetcode-query": "2.0.1",
+    "nano-font": "0.3.1"
+  },
+
+  "devDependencies": {
+    "tsup": "8.5.0",
+    "typescript": "^5.9.3"
+  },
+
+  "engines": {
+    "node": "20.x"
+  }
+}
