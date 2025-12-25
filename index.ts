@@ -6,7 +6,7 @@ export default async function handler(req: any, res: any) {
     const params = url.searchParams;
 
     const svg = await generate({
-      username: params.get("username") ?? "selva19",
+      username: params.get("username") ?? "pranesh_s_2005",
       theme: params.get("theme") ?? "light",
       animation: params.get("animation") !== "false",
       width: Number(params.get("width") ?? 500),
@@ -15,7 +15,7 @@ export default async function handler(req: any, res: any) {
     });
 
     res.setHeader("Content-Type", "image/svg+xml");
-    res.setHeader("Cache-Control", "public, s-maxage=1800");
+    res.setHeader("Cache-Control", "public, max-age=1800, s-maxage=1800");
     res.status(200).send(svg);
   } catch (err: any) {
     res.status(500).send(
