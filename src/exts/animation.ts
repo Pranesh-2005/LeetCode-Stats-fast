@@ -1,5 +1,5 @@
-import { selectors } from "../elements";
-import { Extension } from "../types";
+import { selectors } from "../elements.js";
+import { Extension } from "../types.js";
 
 const keyframe = `@keyframes fade_in{from{opacity:0}to{opacity:1}}`;
 

@@ -1,7 +1,7 @@
 import { LeetCode, LeetCodeCN } from "leetcode-query";
-import { Generator } from "../card";
-import { Item } from "../item";
-import { Extension } from "../types";
+import { Generator } from "../card.js";
+import { Item } from "../item.js";
+import { Extension } from "../types.js";
 
 export async function HeatmapExtension(generator: Generator): Promise<Extension> {
     const pre_counts = new Promise<Record<string, number>>((resolve) => {

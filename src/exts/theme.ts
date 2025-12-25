@@ -1,15 +1,15 @@
-import { Theme } from "../theme/_theme";
-import catppuccinMocha from "../theme/catppuccin-mocha";
-import chartreuse from "../theme/chartreuse";
-import dark from "../theme/dark";
-import forest from "../theme/forest";
-import light from "../theme/light";
-import nord from "../theme/nord";
-import radical from "../theme/radical";
-import transparent from "../theme/transparent";
-import unicorn from "../theme/unicorn";
-import wtf from "../theme/wtf";
-import { Config, Extension, Item } from "../types";
+import { Theme } from "../theme/_theme.js";
+import catppuccinMocha from "../theme/catppuccin-mocha.js";
+import chartreuse from "../theme/chartreuse.js";
+import dark from "../theme/dark.js";
+import forest from "../theme/forest.js";
+import light from "../theme/light.js";
+import nord from "../theme/nord.js";
+import radical from "../theme/radical.js";
+import transparent from "../theme/transparent.js";
+import unicorn from "../theme/unicorn.js";
+import wtf from "../theme/wtf.js";
+import { Config, Extension, Item } from "../types.js";
 
 function themeFromColors(list: string[]): Theme {
     // Map: first 2 -> bg, next 2 -> text, next 4 -> accent colors

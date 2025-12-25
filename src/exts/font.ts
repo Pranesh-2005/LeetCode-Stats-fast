@@ -3,8 +3,8 @@ import Milonga from "nano-font/fonts/Milonga.js";
 import Patrick_Hand from "nano-font/fonts/Patrick_Hand.js";
 import Ruthie from "nano-font/fonts/Ruthie.js";
 import Source_Code_Pro from "nano-font/fonts/Source_Code_Pro.js";
-import { Generator } from "../card";
-import { Extension } from "../types";
+import { Generator } from "../card.js";
+import { Extension } from "../types.js";
 
 export const supported: Record<string, { name: string; base64: string }> = {
     baloo_2: Baloo_2,

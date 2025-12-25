@@ -1,7 +1,7 @@
 import { ContestInfo, ContestRanking, LeetCode } from "leetcode-query";
-import { Generator } from "../card";
-import { Item } from "../item";
-import { Extension } from "../types";
+import { Generator } from "../card.js";
+import { Item } from "../item.js";
+import { Extension } from "../types.js";
 
 export async function ContestExtension(generator: Generator): Promise<Extension> {
     const pre_result = new Promise<null | { ranking: ContestRanking; history: ContestInfo[] }>(

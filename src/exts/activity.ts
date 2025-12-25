@@ -1,6 +1,6 @@
-import { Gradient } from "../elements";
-import { Item } from "../item";
-import { Extension } from "../types";
+import { Gradient } from "../elements.js";
+import { Item } from "../item.js";
+import { Extension } from "../types.js";
 
 const statuses: Record<string, string> = {
     Accepted: "AC",
