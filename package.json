@@ -8,6 +8,7 @@
     "start": "node dist/index.js"
   },
   "dependencies": {
+    "@upstash/redis": "^1.36.0",
     "leetcode-query": "2.0.1",
     "nano-font": "0.3.1"
   },
