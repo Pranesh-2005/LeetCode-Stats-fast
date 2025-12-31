@@ -1,5 +1,12 @@
 import { Redis } from "@upstash/redis";
-import generate from "./src/index.js";
+import generate, {
+  HeatmapExtension,
+  ActivityExtension,
+  ContestExtension,
+  FontExtension,
+  ThemeExtension,
+  AnimationExtension,
+} from "./src/index.js";
 
 const redis = Redis.fromEnv();
 
@@ -66,12 +73,31 @@ async function serveSVG(req: any, res: any) {
   const url = new URL(req.url, "http://localhost");
   const params = url.searchParams;
 
+  // parse requested extensions (comma-separated, case-insensitive)
+  const extParam = (params.get("ext") ?? params.get("extensions") ?? "").trim();
+  const requested = extParam ? extParam.split(",").map(s => s.trim().toLowerCase()) : [];
+
+  const extMap: Record<string, any> = {
+    heatmap: HeatmapExtension,
+    activity: ActivityExtension,
+    contest: ContestExtension,
+    font: FontExtension,
+    theme: ThemeExtension,
+    animation: AnimationExtension,
+  };
+
+  // start with defaults then add any requested extras (dedupe)
+  const defaults = [FontExtension, AnimationExtension, ThemeExtension];
+  const extras = requested.map(name => extMap[name]).filter(Boolean);
+  const extensions = Array.from(new Set([...defaults, ...extras]));
+
   const svg = await generate({
     username: params.get("username") ?? "pranesh_s_2005",
     theme: params.get("theme") ?? "light",
     animation: params.get("animation") !== "false",
     width: Number(params.get("width") ?? 500),
     height: Number(params.get("height") ?? 200),
+    extensions,
   });
 
   res.setHeader("Content-Type", "image/svg+xml");
