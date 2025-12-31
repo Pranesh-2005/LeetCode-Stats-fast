@@ -1,5 +1,9 @@
 import { Redis } from "@upstash/redis";
-import generate from "./src/index.js";
+import generate, {
+  ActivityExtension,
+  HeatmapExtension,
+  ContestExtension,
+} from "./src/index.js";
 
 const redis = Redis.fromEnv();
 
@@ -7,9 +11,9 @@ const WINDOW_SECONDS = 60;   // 1 minute
 const MAX_REQUESTS = 60;    // per IP per minute
 
 // --------------------
-// Extension parser
+// Extension resolver
 // --------------------
-function parseExtensions(extParam: string | null) {
+function resolveExtensions(extParam: string | null) {
   const exts = new Set(
     (extParam ?? "")
       .split(",")
@@ -17,11 +21,22 @@ function parseExtensions(extParam: string | null) {
       .filter(Boolean)
   );
 
-  return {
-    heatmap: exts.has("heatmap"),
-    activity: exts.has("activity"),
-    contest: exts.has("contest"),
-  };
+  const extensions = [];
+
+  if (exts.has("activity")) extensions.push(ActivityExtension);
+  if (exts.has("heatmap")) extensions.push(HeatmapExtension);
+  if (exts.has("contest")) extensions.push(ContestExtension);
+
+  // ext=all shortcut
+  if (exts.has("all")) {
+    extensions.push(
+      ActivityExtension,
+      HeatmapExtension,
+      ContestExtension
+    );
+  }
+
+  return extensions;
 }
 
 // --------------------
@@ -41,7 +56,6 @@ export default async function handler(req: any, res: any) {
 
     const key = `rl:${ip}`;
 
-    // ---- Redis rate limiting ----
     const count = await redis.incr(key);
     if (count === 1) {
       await redis.expire(key, WINDOW_SECONDS);
@@ -87,10 +101,7 @@ async function serveSVG(req: any, res: any) {
   const url = new URL(req.url, "http://localhost");
   const params = url.searchParams;
 
-  // ✅ NEW: ext support
-  const { heatmap, activity, contest } = parseExtensions(
-    params.get("ext")
-  );
+  const extensions = resolveExtensions(params.get("ext"));
 
   const svg = await generate({
     username: params.get("username") ?? "pranesh_s_2005",
@@ -103,16 +114,11 @@ async function serveSVG(req: any, res: any) {
     font: params.get("font") ?? "baloo_2",
     animation: params.get("animation") !== "false",
 
-    // 🔥 extensions
-    heatmap,
-    activity,
-    contest,
+    // 🔥 THIS is the key
+    extensions,
   });
 
   res.setHeader("Content-Type", "image/svg+xml");
-  res.setHeader(
-    "Cache-Control",
-    "public, max-age=1800, s-maxage=1800"
-  );
+  res.setHeader("Cache-Control", "public, max-age=1800, s-maxage=1800");
   res.status(200).send(svg);
 }
