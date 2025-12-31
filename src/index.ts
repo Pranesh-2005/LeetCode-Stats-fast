@@ -14,28 +14,19 @@ import type { Config } from "./types.js"; // Use 'type' import for interfaces
  * @returns The card (svg)
  */
 export async function generate(config: Partial<Config>): Promise<string> {
-  const generator = new Generator();
-
-  return await generator.generate({
-    username: "pranesh_2005",
-    site: "us",
-
-    width: 500,
-    height: 200,
-    css: [],
-
-    // ✅ API decides everything
-    ...config,
-
-    // ✅ Safe defaults only if API did NOT send them
-    extensions:
-      config.extensions ??
-      [FontExtension, AnimationExtension, ThemeExtension],
-
-    theme: config.theme ?? "light",
-    font: config.font ?? "baloo_2",
-    animation: config.animation ?? true,
-  });
+    const generator = new Generator();
+    return await generator.generate({
+        username: "pranesh_s_2005",
+        site: "us",
+        width: 500,
+        height: 200,
+        css: [],
+        extensions: [FontExtension, AnimationExtension, ThemeExtension],
+        animation: true,
+        font: "baloo_2",
+        theme: "light",
+        ...config,
+    });
 }
 
 export default generate;
