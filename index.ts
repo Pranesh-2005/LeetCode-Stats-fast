@@ -1,8 +1,11 @@
 import { Redis } from "@upstash/redis";
 import generate, {
-  ActivityExtension,
   HeatmapExtension,
+  ActivityExtension,
   ContestExtension,
+  FontExtension,
+  ThemeExtension,
+  AnimationExtension,
 } from "./src/index.js";
 
 const redis = Redis.fromEnv();
@@ -10,41 +13,9 @@ const redis = Redis.fromEnv();
 const WINDOW_SECONDS = 60;   // 1 minute
 const MAX_REQUESTS = 60;    // per IP per minute
 
-// --------------------
-// Extension resolver
-// --------------------
-function resolveExtensions(extParam: string | null) {
-  const exts = new Set(
-    (extParam ?? "")
-      .split(",")
-      .map(e => e.trim().toLowerCase())
-      .filter(Boolean)
-  );
-
-  const extensions = [];
-
-  if (exts.has("activity")) extensions.push(ActivityExtension);
-  if (exts.has("heatmap")) extensions.push(HeatmapExtension);
-  if (exts.has("contest")) extensions.push(ContestExtension);
-
-  // ext=all shortcut
-  if (exts.has("all")) {
-    extensions.push(
-      ActivityExtension,
-      HeatmapExtension,
-      ContestExtension
-    );
-  }
-
-  return extensions;
-}
-
-// --------------------
-// Main handler
-// --------------------
 export default async function handler(req: any, res: any) {
   try {
-    // ✅ Skip rate-limit if served from cache
+    // ✅ PRO TIP: skip rate limit if served from cache
     if (req.headers["x-vercel-cache"] === "HIT") {
       return serveSVG(req, res);
     }
@@ -56,7 +27,9 @@ export default async function handler(req: any, res: any) {
 
     const key = `rl:${ip}`;
 
+    // ---- Redis rate limiting ----
     const count = await redis.incr(key);
+
     if (count === 1) {
       await redis.expire(key, WINDOW_SECONDS);
     }
@@ -64,6 +37,7 @@ export default async function handler(req: any, res: any) {
     const remaining = Math.max(0, MAX_REQUESTS - count);
     const reset = Math.floor(Date.now() / 1000) + WINDOW_SECONDS;
 
+    // ✅ Rate-limit headers
     res.setHeader("X-RateLimit-Limit", MAX_REQUESTS);
     res.setHeader("X-RateLimit-Remaining", remaining);
     res.setHeader("X-RateLimit-Reset", reset);
@@ -80,15 +54,13 @@ export default async function handler(req: any, res: any) {
       `);
     }
 
+    // ---- Normal response ----
     return serveSVG(req, res);
 
   } catch (err: any) {
-    res.status(500).setHeader("Content-Type", "image/svg+xml");
-    return res.send(`
+    res.status(500).send(`
       <svg xmlns="http://www.w3.org/2000/svg">
-        <text x="10" y="20">
-          ${err?.message ?? "Internal Error"}
-        </text>
+        <text x="10" y="20">${err?.message ?? "Internal Error"}</text>
       </svg>
     `);
   }
@@ -101,20 +73,30 @@ async function serveSVG(req: any, res: any) {
   const url = new URL(req.url, "http://localhost");
   const params = url.searchParams;
 
-  const extensions = resolveExtensions(params.get("ext"));
+  // parse requested extensions (comma-separated, case-insensitive)
+  const extParam = (params.get("ext") ?? params.get("extensions") ?? "").trim();
+  const requested = extParam ? extParam.split(",").map(s => s.trim().toLowerCase()) : [];
+
+  const extMap: Record<string, any> = {
+    heatmap: HeatmapExtension,
+    activity: ActivityExtension,
+    contest: ContestExtension,
+    font: FontExtension,
+    theme: ThemeExtension,
+    animation: AnimationExtension,
+  };
+
+  // start with defaults then add any requested extras (dedupe)
+  const defaults = [FontExtension, AnimationExtension, ThemeExtension];
+  const extras = requested.map(name => extMap[name]).filter(Boolean);
+  const extensions = Array.from(new Set([...defaults, ...extras]));
 
   const svg = await generate({
     username: params.get("username") ?? "pranesh_s_2005",
-    site: params.get("site") ?? "us",
-
+    theme: params.get("theme") ?? "light",
+    animation: params.get("animation") !== "false",
     width: Number(params.get("width") ?? 500),
     height: Number(params.get("height") ?? 200),
-
-    theme: params.get("theme") ?? "light",
-    font: params.get("font") ?? "baloo_2",
-    animation: params.get("animation") !== "false",
-
-    // 🔥 THIS is the key
     extensions,
   });
 
