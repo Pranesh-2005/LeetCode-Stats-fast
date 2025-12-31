@@ -16,7 +16,7 @@ import type { Config } from "./types.js"; // Use 'type' import for interfaces
 export async function generate(config: Partial<Config>): Promise<string> {
     const generator = new Generator();
     return await generator.generate({
-        username: "jacoblincool",
+        username: "pranesh_s_2005",
         site: "us",
         width: 500,
         height: 200,
