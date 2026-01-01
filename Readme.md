@@ -4,7 +4,7 @@ Show your dynamically generated LeetCode stats on your GitHub profile or your we
 
 LeetCode and LeetCode CN are both supported.
 
-[Playground: Try It Now](https://leetcard.jacoblin.cool/)
+[Playground: Try It Now](https://leetcodestatsgen.vercel.app/)
 
 [![LeetCode Stats](https://leetcode-stats-fast.vercel.app/?username=pranesh_s_2005&theme=unicorn&ext=activity)](https://leetcode-stats-fast.vercel.app/?username=pranesh_s_2005&theme=unicorn&ext=activity)
 
