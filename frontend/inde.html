@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>LeetCode Stats &bull; Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- All your existing icon links stay the same -->
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="icons/favicon-48x48.png">
+  
+  <!-- Apple Touch Icons -->
+  <link rel="apple-touch-icon" sizes="57x57" href="icons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="icons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="icons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="icons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="icons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="icons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="icons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="icons/apple-icon-167x167.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-icon-180x180.png">
+  
+  <!-- Android Chrome Icons -->
+  <link rel="icon" type="image/png" sizes="96x96" href="icons/android-icon-96x96.png">
+  <link rel="icon" type="image/png" sizes="128x128" href="icons/android-icon-128x128.png">
+  <link rel="icon" type="image/png" sizes="144x144" href="icons/android-icon-144x144.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="256x256" href="icons/android-icon-256x256.png">
+  <link rel="icon" type="image/png" sizes="384x384" href="icons/android-icon-384x384.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icons/android-icon-512x512.png">
+  
+  <!-- Microsoft Tile Icons -->
+  <meta name="msapplication-TileImage" content="icons/ms-icon-144x144.png">
+  <meta name="msapplication-TileColor" content="#6366f1">
+  <meta name="msapplication-square32x32logo" content="icons/ms-icon-32x32.png">
+  <meta name="msapplication-square70x70logo" content="icons/ms-icon-70x70.png">
+  <meta name="msapplication-square150x150logo" content="icons/ms-icon-150x150.png">
+  <meta name="msapplication-wide310x150logo" content="icons/ms-icon-310x310.png">
+  <meta name="msapplication-square310x310logo" content="icons/ms-icon-310x310.png">
+  
+  <!-- PWA Meta Tags -->
+  <meta name="theme-color" content="#6366f1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="LeetCode">
+  <meta name="description" content="Generate LeetCode stats cards for Github Readme, Portfolio, and more">
+  <meta name="keywords" content="LeetCode, stats, cards, Github, Readme, Portfolio, LeetCode Stats Card, LeetCode Profile Card, LeetCode Stats Generator, Leetcode Profile Generator, LeetCode Stats Generator Vercel, Leetcode Stats Fast, LeetCode Stats Card Generator">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="LeetCode Stats - Dashboard">
+  <meta property="og:description" content="Generate LeetCode stats cards">
+  <meta property="og:image" content="icons/android-icon-512x512.png">
+  <meta property="og:url" content="https://flash-cards-ai.vercel.app">
+  <meta property="og:type" content="website">
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LeetCode Stats - Dashboard">
+  <meta name="twitter:description" content="Generate LeetCode stats cards for Github Readme, Portfolio, and more">
+  <meta name="twitter:image" content="icons/android-icon-512x512.png">
+
+  <style>
+    :root {
+      /* Light Theme (Mercedes Silver/White) */
+      --bg: #F5F5F7;
+      --surface: #FFFFFF;
+      --border: #E5E5E7;
+      --text-main: #1D1D1F;
+      --text-muted: #86868B;
+      --accent: #000000;
+      --premium-silver: #D2D2D7;
+      --card-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      --transition: 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+
+    [data-theme="dark"] {
+      --bg: #000000;
+      --surface: #111111;
+      --border: #222222;
+      --text-main: #FFFFFF;
+      --text-muted: #A1A1A6;
+      --accent: #FFFFFF;
+      --premium-silver: #333333;
+      --card-shadow: 0 4px 30px rgba(0,0,0,0.5);
+    }
+
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      transition: background var(--transition), color var(--transition);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Luxury Typography */
+    h1, h2, .luxury-text {
+      font-family: 'Playfair Display', serif;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Premium Navigation */
+    nav {
+      height: 75px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+      backdrop-filter: blur(20px);
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 24px;
+      height: 24px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    /* Theme Toggle */
+    .theme-switch {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 100px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-family: 'Playfair Display', serif;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+    }
+
+    .theme-switch:hover {
+      border-color: var(--text-main);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 120px 0 80px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      margin-bottom: 24px;
+      line-height: 1.1;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 40px;
+    }
+
+    /* Main Dashboard Layout */
+    .dashboard {
+      display: grid;
+      grid-template-columns: 350px 1fr;
+      gap: 40px;
+      margin-bottom: 100px;
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard { grid-template-columns: 1fr; }
+    }
+
+    /* Precision Controls */
+    .controls-panel {
+      position: sticky;
+      top: 120px;
+      height: fit-content;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .control-group {
+      margin-bottom: 24px;
+    }
+
+    .control-group label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      color: var(--text-muted);
+    }
+
+    input, select {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: var(--transition);
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--text-main);
+      box-shadow: 0 0 0 4px var(--premium-silver);
+    }
+
+    /* Preview Arena */
+    .preview-arena {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .preview-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 400px;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .preview-card:hover {
+      border-color: var(--text-main);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+    }
+
+    .preview-card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+    }
+
+    .preview-card:hover img {
+      transform: scale(1.05);
+      filter: brightness(1.02);
+    }
+
+    /* Code Display Section */
+    .code-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .code-grid { grid-template-columns: 1fr; }
+    }
+
+    .code-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+    }
+
+    .code-block h3 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      color: var(--text-muted);
+    }
+
+    .code-content {
+      background: var(--bg);
+      padding: 16px;
+      border-radius: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      word-break: break-all;
+      color: var(--text-main);
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .code-content:hover {
+      background: var(--premium-silver);
+    }
+
+    .code-content::after {
+      content: 'COPY';
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      background: var(--accent);
+      color: var(--surface);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .code-content:hover::after {
+      opacity: 1;
+      right: 20px;
+    }
+
+    /* Showcase Section */
+    .showcase {
+      margin-top: 80px;
+      padding-top: 80px;
+      border-top: 1px solid var(--border);
+    }
+
+    .showcase h2 {
+      font-size: 2.5rem;
+      margin-bottom: 48px;
+    }
+
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .showcase-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      transition: var(--transition);
+    }
+
+    .showcase-item:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--card-shadow);
+    }
+
+    .showcase-item img {
+      width: 100%;
+      height: auto;
+    }
+
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Status Dot */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px;
+      background: rgba(0, 255, 100, 0.1);
+      color: #00CC44;
+      border-radius: 100px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      background: currentColor;
+      border-radius: 50%;
+      box-shadow: 0 0 10px currentColor;
+    }
+  </style>
+</head>
+<body data-theme="light">
+  
+  <nav>
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <div class="logo">
+        <div class="logo-icon"></div>
+        <span>LeetCode Stats</span>
+      </div>
+      <button class="theme-switch" id="themeToggle">
+        <span id="themeIcon">☼</span>
+        <span id="themeText">LIGHT MODE</span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <section class="dashboard">
+      <!-- Controls -->
+      <aside class="controls-panel">
+        <h3 class="luxury-text" style="margin-bottom: 24px; font-size: 1.5rem;">Configuration</h3>
+        
+        <div class="control-group">
+          <label>LeetCode Username</label>
+          <input id="username" type="text" value="pranesh_s_2005" placeholder="Enter username" />
+        </div>
+
+        <div class="control-group">
+          <label>Regional Site</label>
+          <select id="site">
+            <option value="us">Global (US)</option>
+            <option value="cn">Mainland China (CN)</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label>Visual Aesthetic</label>
+          <select id="theme">
+            <option value="light">Pure Light</option>
+            <option value="dark">Stealth Dark</option>
+            <option value="nord" selected>Nord Frost</option>
+            <option value="forest">Emerald Forest</option>
+            <option value="wtf">Vibrant Punch</option>
+            <option value="unicorn">Celestial Unicorn</option>
+            <option value="transparent">Minimal Ghost</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label>Data Extension</label>
+          <select id="ext">
+            <option value="">Standard Card</option>
+            <option value="activity">Activity Report</option>
+            <option value="contest">Contest Analysis</option>
+            <option value="heatmap">Yearly Heatmap</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label>Typography Override</label>
+          <input id="font" type="text" placeholder="e.g. Playfair_Display" />
+        </div>
+
+        <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="control-group">
+            <label>Width</label>
+            <input id="width" type="number" placeholder="500" />
+          </div>
+          <div class="control-group">
+            <label>Height</label>
+            <input id="height" type="number" placeholder="200" />
+          </div>
+        </div>
+      </aside>
+
+      <!-- Preview Arena -->
+      <div class="preview-arena">
+        <div class="preview-card">
+          <img id="card" src="/placeholder.svg" alt="LeetCode Stats Preview" />
+        </div>
+
+        <div class="code-grid">
+          <div class="code-block">
+            <h3>Markdown Syntax</h3>
+            <div class="code-content" id="md">![LeetCode Stats](...)</div>
+          </div>
+          <div class="code-block">
+            <h3>Asset URL</h3>
+            <div class="code-content" id="url">https://...</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Showcase Sections -->
+    <section class="showcase">
+      <h2 class="luxury-text">Design Variations</h2>
+      <div class="showcase-grid" id="themesShowcase">
+        <!-- Injected via JS -->
+      </div>
+    </section>
+
+    <section class="showcase" style="margin-top: 40px;">
+      <h2 class="luxury-text">Extension Modules</h2>
+      <div class="showcase-grid" id="extShowcase">
+        <!-- Injected via JS -->
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="logo" style="justify-content: center; margin-bottom: 24px;">
+        <div class="logo-icon"></div>
+        <span>LeetCode Stats</span>
+      </div>
+      <p>&copy; 2026 Crafted with precision. Optimized for all modern devices.</p>
+    </div>
+  </footer>
+
+  <script>
+    const BASE = "https://leetcode-stats-fast.vercel.app/";
+    const THEMES = ['light', 'dark', 'nord', 'forest', 'wtf', 'unicorn', 'transparent'];
+    const EXTENSIONS = ['activity', 'contest', 'heatmap'];
+
+    const controls = {
+      username: document.getElementById("username"),
+      site: document.getElementById("site"),
+      theme: document.getElementById("theme"),
+      ext: document.getElementById("ext"),
+      font: document.getElementById("font"),
+      width: document.getElementById("width"),
+      height: document.getElementById("height")
+    };
+
+    const display = {
+      img: document.getElementById("card"),
+      md: document.getElementById("md"),
+      url: document.getElementById("url"),
+      themeToggle: document.getElementById("themeToggle"),
+      body: document.body,
+      themeText: document.getElementById("themeText"),
+      themeIcon: document.getElementById("themeIcon")
+    };
+
+    function update() {
+      const u = controls.username.value.trim() || "pranesh_s_2005";
+      
+      let params = new URLSearchParams({
+        username: u,
+        site: controls.site.value,
+        theme: controls.theme.value
+      });
+
+      if (controls.ext.value) params.set('ext', controls.ext.value);
+      if (controls.font.value) params.set('font', controls.font.value);
+      if (controls.width.value) params.set('width', controls.width.value);
+      if (controls.height.value) params.set('height', controls.height.value);
+
+      const finalUrl = `${BASE}?${params.toString()}`;
+      
+      display.img.src = finalUrl;
+      display.md.textContent = `![LeetCode Stats](${finalUrl})`;
+      display.url.textContent = finalUrl;
+    }
+
+    // Theme Logic
+    display.themeToggle.addEventListener('click', () => {
+      const current = display.body.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      display.body.setAttribute('data-theme', next);
+      display.themeText.textContent = next === 'light' ? 'LIGHT MODE' : 'DARK MODE';
+      display.themeIcon.textContent = next === 'light' ? '☼' : '☾';
+    });
+
+    // Event Listeners
+    Object.values(controls).forEach(el => {
+      el.addEventListener("input", update);
+      el.addEventListener("change", update);
+    });
+
+    // Copy to Clipboard Utility
+    [display.md, display.url].forEach(el => {
+      el.addEventListener('click', () => {
+        navigator.clipboard.writeText(el.textContent);
+        const originalText = el.textContent;
+        el.textContent = 'COPIED TO CLIPBOARD';
+        setTimeout(() => el.textContent = originalText, 1500);
+      });
+    });
+
+    // Populate Showcases
+    function populateShowcases() {
+      const themeContainer = document.getElementById('themesShowcase');
+      const extContainer = document.getElementById('extShowcase');
+      const u = controls.username.value.trim() || "pranesh_s_2005";
+
+      THEMES.forEach(t => {
+        const div = document.createElement('div');
+        div.className = 'showcase-item';
+        div.innerHTML = `<img src="${BASE}?username=${u}&theme=${t}" alt="${t} theme">`;
+        themeContainer.appendChild(div);
+      });
+
+      EXTENSIONS.forEach(e => {
+        const div = document.createElement('div');
+        div.className = 'showcase-item';
+        div.innerHTML = `<img src="${BASE}?username=${u}&ext=${e}" alt="${e} extension">`;
+        extContainer.appendChild(div);
+      });
+    }
+
+    // Initialize
+    update();
+    populateShowcases();
+  </script>
+</body>
+</html>
