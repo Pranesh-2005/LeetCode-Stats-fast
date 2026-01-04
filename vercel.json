@@ -8,13 +8,6 @@
   ],
   "routes": [
     {
-      "src": "^/$",
-      "status": 308,
-      "headers": {
-        "Location": "https://leetcodestatsgen.vercel.app"
-      }
-    },
-    {
       "src": "/(.*)",
       "dest": "/index.ts"
     }
