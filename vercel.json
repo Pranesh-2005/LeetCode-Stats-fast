@@ -8,14 +8,15 @@
   ],
   "routes": [
     {
+      "src": "^/$",
+      "status": 308,
+      "headers": {
+        "Location": "https://leetcodestatsgen.vercel.app"
+      }
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.ts"
-    }
-  ],
-  "redirects": [
-    {
-      "source": "https://leetcode-stats-fast.vercel.app",
-      "destination": "https://leetcodestatsgen.vercel.app"
     }
   ]
 }
