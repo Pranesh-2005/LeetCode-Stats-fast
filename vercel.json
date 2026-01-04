@@ -11,5 +11,11 @@
       "src": "/(.*)",
       "dest": "/index.ts"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "https://leetcodestatsgen.vercel.app"
+    }
   ]
 }
