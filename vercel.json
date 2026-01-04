@@ -14,7 +14,7 @@
   ],
   "redirects": [
     {
-      "source": "/",
+      "source": "https://leetcode-stats-fast.vercel.app",
       "destination": "https://leetcodestatsgen.vercel.app"
     }
   ]
